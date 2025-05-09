@@ -1,3 +1,4 @@
+from typing import List
 from app.core.models.message import Message
 
 class Pipeline:
@@ -11,8 +12,8 @@ class Pipeline:
         return self  # Allow method chaining
 
 
-    def process(self, message: Message):
+    def process(self, messages: List[Message]):
         """Process the message through all the filters in the pipeline."""
         for stage in self.filters:
-            message = stage.process(message)
-        return message
+            messages = stage.process(messages)
+        return messages
