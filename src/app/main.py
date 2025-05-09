@@ -1,26 +1,24 @@
-# app/main.py
 import asyncio
-from app.core.models.scraper_task import ScraperSource, ScraperTask
-from app.scrapers.nitter.nitter_web_scraper import NitterWebScraper
+from app.agent import Agent
+from app.scrapers.dummy.dummy_file_scrarper import DummyFileScraper
+from app.pipeline.registry import preprocessing_pipeline, publishing_pipeline
+from app.core.services.tasks_service import TasksService
+from app.core.configs.scrapers_config import DUMMY_SCRAPER_CONFIG, TELEGRAM_WEB_SCRAPER_CONFIG
 from app.scrapers.telegram.telegram_web_scraper import TelegramWebScraper
 
-from app.pipeline.registry import default_pipeline  # Your pipeline
-
 async def main():
-    task = ScraperTask(
-        domain="politics",
-        sources=[ScraperSource(target="elonmusk")],
-        limit=3
+    tasks_service = TasksService()
+
+    agent = Agent(
+        scraper=DummyFileScraper(config=DUMMY_SCRAPER_CONFIG),
+        preprocessing_pipeline=preprocessing_pipeline,
+        publishing_pipeline=publishing_pipeline
     )
 
-    scraper = NitterWebScraper(credentials={})
-    messages = await scraper.run_task(task)
-    print(messages)
-    for msg in messages:
-        print(msg.content)
-    
-        processed = default_pipeline.process(msg)
-        print("\nProcessed Message:\n", processed)
+    async for task in tasks_service.stream_tasks():
+
+        agent.assign_task(task)
+        await agent.run()
 
 if __name__ == "__main__":
     asyncio.run(main())
