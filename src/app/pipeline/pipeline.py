@@ -1,14 +1,15 @@
 from typing import List
 from app.core.models.message import Message
+from app.pipeline.base import FilterStage
 
 class Pipeline:
     def __init__(self):
         self.filters = []
 
-    def add_filter(self, filter_stage_class):
+    def add_filter(self, filter_stage_class :FilterStage,*args):
         """Add a filter class (that extends FilterStage) to the pipeline."""
         # Instantiate the filter class and add it to the pipeline
-        self.filters.append(filter_stage_class())
+        self.filters.append(filter_stage_class(*args))
         return self  # Allow method chaining
 
 
