@@ -3,6 +3,7 @@ from datetime import datetime
 
 @dataclass
 class Message:
+    id:str=""
     source: str=""
     domain: str=""
     channel: str=""
