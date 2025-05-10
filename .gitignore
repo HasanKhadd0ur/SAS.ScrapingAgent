@@ -1,1 +1,94 @@
 /env
+# Byte-compiled / optimized / DLL files
+**__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+.coverage
+coverage.xml
+*.cover
+.cache
+.pytest_cache/
+
+# Pytest
+.pytest_cache/
+.pytest_cache/*
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# VSCode
+.vscode/
+
+# PyCharm
+.idea/
+*.iml
+
+# MyPy
+.mypy_cache/
+
+# Pylint
+pylint-report.txt
+pylint-global.txt
+
+# Virtual environments
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.venv/
+
+# Local logs
+*.log
+
+# Scraper-specific artifacts
+playwright/.cache/
+playwright/.downloads/
+playwright/.pytest_cache/
+playwright-report/
+*.db
+
+# SQLite DB
+*.sqlite3
+
+# Other editor backups
+*~
+*.swp
+*.swo
+
+# System files
+.DS_Store
+Thumbs.db

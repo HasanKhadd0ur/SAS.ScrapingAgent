@@ -3,12 +3,21 @@ from typing import List
 
 
 @dataclass
-class ScraperSource:
+class DataSource:
     target: str
     config: dict = None
-
+    limit: int =1 
 @dataclass
-class ScraperTask:
+class ScrapingApproach:
+    mode: str ="Dummy"
+    platform:str ="File"
+    name: str="DummyFileScraper"
+    
+@dataclass
+class ScrapingTask:
+    id: str
     domain: str
-    sources: List[ScraperSource]
+    sources: List[DataSource]
     limit: int = 5
+    scraping_approach: ScrapingApproach =ScrapingApproach
+
