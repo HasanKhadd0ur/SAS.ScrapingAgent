@@ -1,7 +1,7 @@
 import asyncio
 import uuid
 from typing import AsyncGenerator
-from app.core.models.scraper_task import ScraperTask, ScraperSource
+from app.core.models.scraper_task import ScraperTask, DataSource
 
 
 class TasksService:
@@ -15,7 +15,7 @@ class TasksService:
             yield ScraperTask(
                     id=str(uuid.uuid4()), 
                     domain="politics",
-                    sources=[ScraperSource(target="freesyria102", limit=10)],
-                    limit=30
+                    sources=[DataSource(target="freesyria102", limit=10)],
+                    limit=100
                 )
 
