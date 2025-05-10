@@ -15,7 +15,6 @@ class NormalizeTextStage(FilterStage):
     def process(self, messages: List[Message], nextStep: Optional[FilterStage] = None) -> List[Message]:
         for message in messages:
             message.content = self.normalize(message.content)
-            message.base_content = self.normalize(message.base_content)
 
         if nextStep:
             return nextStep.process(messages)

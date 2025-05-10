@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from app.core.models.message import Message
-from app.core.models.scraper_task import ScraperTask
+from app.core.models.scraper_task import ScrapingTask
 from typing import List
 
 class BaseScraper(ABC):
@@ -8,5 +8,5 @@ class BaseScraper(ABC):
         self.config = config
 
     @abstractmethod
-    async def run_task(self, task: ScraperTask) -> List[Message]:
+    async def run_task(self, task: ScrapingTask) -> List[Message]:
         pass

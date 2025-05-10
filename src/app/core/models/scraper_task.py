@@ -9,8 +9,9 @@ class DataSource:
     limit: int =1 
 @dataclass
 class ScrapingApproach:
-    mode: str ="web"
-    name: str="dummy"
+    mode: str ="Dummy"
+    platform:str ="File"
+    name: str="DummyFileScraper"
     
 @dataclass
 class ScrapingTask:
@@ -18,5 +19,5 @@ class ScrapingTask:
     domain: str
     sources: List[DataSource]
     limit: int = 5
-    scraping_approach: ScrapingApproach =ScrapingApproach()
+    scraping_approach: ScrapingApproach =ScrapingApproach
 

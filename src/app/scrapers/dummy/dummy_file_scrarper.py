@@ -1,5 +1,5 @@
 from app.scrapers.base import BaseScraper
-from app.core.models.scraper_task import ScraperTask
+from app.core.models.scraper_task import ScrapingTask
 from app.core.models.message import Message
 from typing import AsyncGenerator, List
 import json
@@ -13,7 +13,7 @@ class DummyFileScraper(BaseScraper):
         self.delay = config.get("delay", 0.1)
         self.batch_size = config.get("batch_size", 1)
 
-    async def run_task(self, task: ScraperTask) -> AsyncGenerator[List[Message], None]:
+    async def run_task(self, task: ScrapingTask) -> AsyncGenerator[List[Message], None]:
         batch = []
 
         try:

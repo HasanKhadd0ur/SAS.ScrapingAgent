@@ -1,7 +1,4 @@
-import asyncio
-from typing import List
-from app.core.models.scraper_task import ScraperTask
-from app.core.models.message import Message
+from app.core.models.scraper_task import ScrapingTask
 from app.scrapers.base import BaseScraper
 from app.pipeline.pipeline import Pipeline
 from app.pipeline.registry import publishing_pipeline as pub, preprocessing_pipeline as pre
@@ -17,7 +14,7 @@ class Agent:
         self.scraper = scraper
         self.preprocessing_pipeline = preprocessing_pipeline
         self.publishing_pipeline = publishing_pipeline
-        self.task: ScraperTask = None
+        self.task: ScrapingTask = None
 
     def set_preprocessing_pipeline(self, pipeline: Pipeline):
         self.preprocessing_pipeline = pipeline
@@ -28,7 +25,7 @@ class Agent:
     def set_scraper(self, scraper: BaseScraper):
         self.scraper = scraper
 
-    def assign_task(self, task: ScraperTask):
+    def assign_task(self, task: ScrapingTask):
         self.task = task
 
     async def run(self):
