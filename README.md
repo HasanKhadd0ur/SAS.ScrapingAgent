@@ -129,5 +129,4 @@ This project can forward results to Kafka topics by implementing a `KafkaProduce
 ---
 
 ## 📄 License
-
 MIT License
