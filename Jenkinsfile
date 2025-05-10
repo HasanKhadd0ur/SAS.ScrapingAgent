@@ -15,20 +15,20 @@ pipeline {
         stage('Setup Python') {
             steps {
                 sh 'python -m venv $VENV_DIR'
-                sh '. $VENV_DIR/bin/activate && pip install --upgrade pip && pip install -r requirements.txt'
+                bat '. $VENV_DIR/bin/activate && pip install --upgrade pip && pip install -r requirements.txt'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh '. $VENV_DIR/bin/activate && pytest tests/'
+                bat '. $VENV_DIR/bin/activate && pytest tests/'
             }
         }
     }
 
     post {
         always {
-            junit 'tests/**/pytest-report.xml'
+            echo done
         }
     }
 }
