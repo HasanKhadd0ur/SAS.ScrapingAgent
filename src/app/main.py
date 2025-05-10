@@ -10,7 +10,7 @@ async def main():
     tasks_service = TasksService()
 
     agent = Agent(
-        scraper=DummyFileScraper(config=DUMMY_SCRAPER_CONFIG),
+        scraper=TelegramWebScraper(config=TELEGRAM_WEB_SCRAPER_CONFIG),
         preprocessing_pipeline=preprocessing_pipeline,
         publishing_pipeline=publishing_pipeline
     )
