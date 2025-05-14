@@ -12,10 +12,10 @@ class NormalizeTextStage(FilterStage):
         text = re.sub(r"\s+", " ", text).strip()  # normalize spaces
         return text
 
-    def process(self, messages: List[Message], nextStep: Optional[FilterStage] = None) -> List[Message]:
+    async def process(self, messages: List[Message], nextStep: Optional[FilterStage] = None) -> List[Message]:
         for message in messages:
             message.content = self.normalize(message.content)
 
         if nextStep:
-            return nextStep.process(messages)
+            return await nextStep.process(messages)
         return messages

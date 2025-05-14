@@ -13,9 +13,16 @@ class TasksService:
             await asyncio.sleep(1)  # Simulate delay between tasks
             yield ScrapingTask(
                     id=str(uuid.uuid4()), 
-                    domain="politics",
+                    domain="telegram.Politics",
                     sources=[DataSource(target="freesyria102", limit=30)],
                     limit=100,
                     scraping_approach=ScrapingApproach(name="DummyFileScraper",platform="File",mode="Dummy")
                 )
+            # yield ScrapingTask(
+            #         id=str(uuid.uuid4()), 
+            #         domain="telegram.Politics",
+            #         sources=[DataSource(target="freesyria102", limit=100)],
+            #         limit=100,
+            #         scraping_approach=ScrapingApproach(name="TelegramWebScraper",platform="Telegram",mode="Web")
+            #     )
 

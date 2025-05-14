@@ -8,7 +8,7 @@ class SentimentAnalysisStage(FilterStage):
         super().__init__()
         self.sentiment_model = sentiment_model
 
-    def process(self, messages: List[Message], nextStep: FilterStage = None) -> List[Message]:
+    async def process(self, messages: List[Message], nextStep: FilterStage = None) -> List[Message]:
         for message in messages:
             # print(message.content)
             sentiment_score = self.sentiment_model.analyze(text=message.content)
@@ -16,5 +16,5 @@ class SentimentAnalysisStage(FilterStage):
             message.sentiment_label = "positive" if sentiment_score > 0.5 else "negative"
         
         if nextStep:
-            return nextStep.process(messages)
+            return await nextStep.process(messages)
         return messages

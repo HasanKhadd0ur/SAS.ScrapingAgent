@@ -13,8 +13,8 @@ class Pipeline:
         return self  # Allow method chaining
 
 
-    def process(self, messages: List[Message]):
+    async def process(self, messages: List[Message]):
         """Process the message through all the filters in the pipeline."""
         for stage in self.filters:
-            messages = stage.process(messages)
+            messages = await stage.process(messages)
         return messages

@@ -65,9 +65,9 @@ class TelegramWebScraper(BaseScraper):
                     )
                     content = await post.inner_text()
                     message = Message(
-                        source="telegram",
+                        source=source.target,
                         domain=task.domain,
-                        channel=source.target,
+                        platform="telegram",
                         raw_content=content,
                         content=content
                     )
