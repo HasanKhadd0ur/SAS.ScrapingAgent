@@ -26,7 +26,7 @@ class DummyFileScraper(BaseScraper):
                         id=data["tweet_id"],
                         source="dummy_file",
                         domain=task.domain,
-                        channel="test",
+                        platform="dummy_file",
                         raw_content=data["text"],
                         content=data["text"],
                         timestamp=data["created_at"]

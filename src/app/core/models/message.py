@@ -6,7 +6,7 @@ class Message:
     id:str=""
     source: str=""
     domain: str=""
-    channel: str=""
+    platform: str=""
     raw_content: str=""
     content: str=""
     sentiment_label: str=""

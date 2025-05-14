@@ -1,20 +1,20 @@
-# app/infrastructure/kafka_producer.py
 import json
-from aiokafka import AIOKafkaProducer
-
+from kafka import KafkaProducer as SyncKafkaProducer
 
 class KafkaProducer:
     def __init__(self, bootstrap_servers="localhost:9092"):
-        self.producer = AIOKafkaProducer(
+        # Use the synchronous KafkaProducer from kafka-python
+        self.producer = SyncKafkaProducer(
             bootstrap_servers=bootstrap_servers,
             value_serializer=lambda v: json.dumps(v).encode("utf-8")
         )
 
-    async def start(self):
-        await self.producer.start()
+    def send(self, topic: str, value: dict):
+        # Synchronously send a message to the Kafka topic
+        self.producer.send(topic, value)
+        # Ensure the message is written to Kafka
+        self.producer.flush()
 
-    async def stop(self):
-        await self.producer.stop()
-
-    async def send(self, topic: str, value: dict):
-        await self.producer.send_and_wait(topic, value)
+    def stop(self):
+        # Close the producer when done
+        self.producer.close()

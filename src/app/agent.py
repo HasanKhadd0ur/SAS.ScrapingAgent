@@ -33,6 +33,6 @@ class Agent:
             raise ValueError("No task assigned to agent.")
 
         async for message_batch in self.scraper.run_task(self.task):
-            processed = self.preprocessing_pipeline.process(message_batch)
-            self.publishing_pipeline.process(processed)
+            processed = await self.preprocessing_pipeline.process(message_batch)
+            await self.publishing_pipeline.process(processed)
             print(f"[+] Finished processing batch for task '{self.task.id}'")
