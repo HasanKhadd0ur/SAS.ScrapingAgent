@@ -9,11 +9,12 @@ class TasksService:
 
     async def stream_tasks(self) -> AsyncGenerator[ScrapingTask, None]:
         # Simulate streaming 3 fake tasks with small delays
-        for i in range(3):
+        for i in range(300):
             await asyncio.sleep(1)  # Simulate delay between tasks
             yield ScrapingTask(
                     id=str(uuid.uuid4()), 
-                    domain="telegram.Politics",
+                    platform="telegram",
+                    domain="Politics",
                     sources=[DataSource(target="freesyria102", limit=30)],
                     limit=100,
                     scraping_approach=ScrapingApproach(name="DummyFileScraper",platform="File",mode="Dummy")

@@ -1,5 +1,5 @@
-from typing import List, Optional
-from app.core.models.message import Message
+from typing import Optional
+from app.core.models.message import ScrapingContext
 from app.pipeline.base import FilterStage
 
 KEYWORDS = {
@@ -12,15 +12,16 @@ class KeywordFilterStage(FilterStage):
         super().__init__()
         self.keywords = keywords
 
-    async def process(self, messages: List[Message], nextStep: Optional[FilterStage] = None) -> List[Message]:
+    async def process(self, scraping_context : ScrapingContext, nextStep: Optional[FilterStage] = None) -> ScrapingContext:
         filtered_messages = []
-        for message in messages:
+        for message in scraping_context.messages:
             keywords = self.keywords.get(message.domain, [])
             content = message.content.lower()
 
             if any(k in content for k in keywords):
                 
                 filtered_messages.append(message)
+        scraping_context.messages=filtered_messages
         if nextStep: 
-            return await nextStep.process(filtered_messages)
-        return filtered_messages
+            return await nextStep.process(scraping_context)
+        return scraping_context

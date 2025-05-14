@@ -17,6 +17,7 @@ class ScrapingApproach:
 class ScrapingTask:
     id: str
     domain: str
+    platform:str
     sources: List[DataSource]
     limit: int = 5
     scraping_approach: ScrapingApproach =ScrapingApproach

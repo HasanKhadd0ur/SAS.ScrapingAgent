@@ -1,5 +1,5 @@
-from typing import List, Optional
-from app.core.models.message import Message
+from typing import  Optional
+from app.core.models.message import ScrapingContext
 from app.pipeline.base import FilterStage
 import re
 
@@ -12,10 +12,10 @@ class NormalizeTextStage(FilterStage):
         text = re.sub(r"\s+", " ", text).strip()  # normalize spaces
         return text
 
-    async def process(self, messages: List[Message], nextStep: Optional[FilterStage] = None) -> List[Message]:
-        for message in messages:
+    async def process(self, scraping_context : ScrapingContext, nextStep: Optional[FilterStage] = None) -> ScrapingContext:
+        for message in scraping_context.messages:
             message.content = self.normalize(message.content)
 
         if nextStep:
-            return await nextStep.process(messages)
-        return messages
+            return await nextStep.process(scraping_context)
+        return scraping_context
