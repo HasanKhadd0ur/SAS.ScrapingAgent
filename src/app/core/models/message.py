@@ -1,5 +1,8 @@
 from dataclasses import dataclass
 from datetime import datetime
+from typing import List
+
+from app.core.models.scraper_task import ScrapingTask
 
 @dataclass
 class Message:
@@ -19,5 +22,14 @@ class Message:
             self.metadata = {}
 
 @dataclass
-class MessageContext: 
-    message: Message 
+class PipelineContext:
+    pass
+
+@dataclass
+class ScrapingContext(PipelineContext): 
+    messages: List[Message]
+    task:ScrapingTask=None
+    metadata: dict = None
+    def __post_init__(self):
+        if self.metadata is None:
+            self.metadata = {}

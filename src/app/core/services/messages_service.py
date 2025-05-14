@@ -15,6 +15,7 @@ class MessagesService:
 
  
     async def publish(self, topic: str, messages: List[Message]):
+        
         # Prepare all messages in the batch dynamically using the message attributes
         payloads = [self._serialize_message(message) for message in messages]
 
@@ -31,10 +32,7 @@ class MessagesService:
             print(f"[+] First message in batch: '{messages[0].content[:20]}...' with label={messages[0].sentiment_label}, score={messages[0].sentiment_score}")
             # logger.debug(f"Publishing to topic {topic}: {message.content.split(" ")[0]} with {message.sentiment_label}")
             # print(f"[+] Publishing to topic {topic}: {message.content.split(" ")[0]} with {message.sentiment_label}, {message.sentiment_score}")
-        # print(f"[+] Publishing to topic {topic}: {messages[0].content.split(" ")[0]} with {messages[0].sentiment_label}")        
-        # logger.debug(f"Publishing to topic {topic}: {messages[0].content.split(" ")[0]} with {messages[0].sentiment_label}")
-        # print(f"[+] Publishing to topic {topic}: {messages[0].content.split(" ")[0]} with {messages[0].sentiment_label}")
-
+    
     def _serialize_message(self, message: Message) -> dict:
         """
         Serializes a Message object into a dictionary for publishing.
@@ -42,12 +40,14 @@ class MessagesService:
         """
         # return  json.dumps(message).encode('utf-8')
         return {
+            "id": message.id,
             "content": message.content,
             "sentiment_label": message.sentiment_label,
             "sentiment_score": message.sentiment_score,
             "timestamp": message.timestamp,  
             "platform":message.platform,
-            "source":message.source
+            "source":message.source,
+            "raw_content":message.raw_content
         }
         
     def save_messages(self,messages : List[Message],file_path :str):

@@ -1,3 +1,4 @@
+from app.core.models.message import ScrapingContext
 from app.core.models.scraper_task import ScrapingTask
 from app.scrapers.base import BaseScraper
 from app.pipeline.pipeline import Pipeline
@@ -33,6 +34,8 @@ class Agent:
             raise ValueError("No task assigned to agent.")
 
         async for message_batch in self.scraper.run_task(self.task):
-            processed = await self.preprocessing_pipeline.process(message_batch)
-            await self.publishing_pipeline.process(processed)
-            print(f"[+] Finished processing batch for task '{self.task.id}'")
+            
+            context=ScrapingContext(messages=message_batch,task=self.task)       
+            
+            context = await self.preprocessing_pipeline.process(context)
+            await self.publishing_pipeline.process(context)

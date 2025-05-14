@@ -1,5 +1,4 @@
-from typing import List
-from app.core.models.message import Message
+from app.core.models.message import ScrapingContext
 from app.pipeline.base import FilterStage
 
 class Pipeline:
@@ -13,8 +12,8 @@ class Pipeline:
         return self  # Allow method chaining
 
 
-    async def process(self, messages: List[Message]):
+    async def process(self, scraping_context : ScrapingContext):
         """Process the message through all the filters in the pipeline."""
         for stage in self.filters:
-            messages = await stage.process(messages)
-        return messages
+            scraping_context = await stage.process(scraping_context)
+        return scraping_context
