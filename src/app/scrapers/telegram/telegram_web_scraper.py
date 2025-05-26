@@ -12,7 +12,7 @@ from random import randint
 class TelegramWebScraper(BaseScraper):
     def __init__(self, config_service: BaseConfig):
         config=config_service.get_config("TELEGRAM_WEB_SCRAPER_CONFIG")
-        self.batch_size = config.get_config("batch_size", 5)
+        self.batch_size = config.get("batch_size", 5)
         self.delay = config.get("delay", 0.1)
         self.selector = config.get("selector", "div.tgme_widget_message_text")
 

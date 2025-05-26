@@ -12,7 +12,7 @@ async def main():
     factory = ScraperFactory()
 
     agent = Agent(
-        scraper=DummyFileScraper(config=EnvConfig()),
+        scraper=DummyFileScraper(config_service=EnvConfig()),
         preprocessing_pipeline=preprocessing_pipeline,
         publishing_pipeline=publishing_pipeline
     )

@@ -23,7 +23,7 @@ class ScraperRegistry:
         """
         key = self._make_key(approach)
         scraper_class, config = self.registry.get(key, (DummyFileScraper, {}))
-        return scraper_class(config=config)
+        return scraper_class(config_service=config)
 
     def _make_key(self, approach: ScrapingApproach) -> str:
         return f"{approach.platform.lower()}:{approach.mode.lower()}"

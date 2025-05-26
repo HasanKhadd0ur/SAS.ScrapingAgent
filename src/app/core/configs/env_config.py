@@ -4,11 +4,22 @@ import random
 from typing import List
 
 from dotenv import load_dotenv
+from pymongo import MongoClient
 
 from app.core.configs.base_config import BaseConfig
 from app.core.configs.scrapers_config import BASE_CONFIG, DUMMY_SCRAPER_CONFIG, TELEGRAM_WEB_SCRAPER_CONFIG
 
+uri = "mongodb://localhost:27017"
+mongo_db_name = "scraper"           # database name
+mongo_collection_name = "config"  # collection name
+
 class EnvSettings:
+    def __init__(self):
+        self.client = MongoClient(uri)
+        self.db = self.client[mongo_db_name]
+        self.collection = self.db[mongo_collection_name]
+        self._configs_cache = {}
+
     user_agents: List[str] = [
         "EventLocationService/1.0 (dummy121@example.com)",
         "EventLocationService/1.0 (dummy2324@example.com)",
@@ -39,10 +50,12 @@ class EnvConfig(BaseConfig):
         return random.choice(self.settings.user_agents)
     
     def get_api_key(self) -> str:
-        api_key = os.getenv("HASH_KEY")
+        api_id = os.getenv("API_ID")
+        api_key = os.getenv("API_KEY")
+        
         if not api_key:
             raise EnvironmentError(" environment variable is not set")
-        return api_key
+        return api_id,api_key
     
     def get_config(self, key: str) -> dict:
         try:
