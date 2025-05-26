@@ -19,7 +19,9 @@ class TelegramTelethonScraper(BaseScraper):
         self.logger = logging.getLogger(__name__)
 
     async def run_task(self, task: ScrapingTask) -> AsyncGenerator[List[Message], None]:
-        await self.client.start()
+        # await self.client.start()
+        await self.client.start(bot_token="7717325685:AAE1-V_1_SaCruPqObZ-0Zl3u7J3_uSLnyY")
+
         batch = []
 
         for source in task.sources:
