@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from typing import List
 
+from app.core.models.credential_model import TelegramCredential
+
 class BaseConfig(ABC):
     @abstractmethod
     def get_user_agents(self) -> List[str]:
@@ -13,4 +15,5 @@ class BaseConfig(ABC):
         pass
     def get_config(self,key)->any:
         pass
-    
+    def get_random_telegram_credential(self) -> TelegramCredential:
+        pass
