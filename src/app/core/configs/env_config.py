@@ -45,6 +45,8 @@ class EnvSettings:
             TelegramCredential.from_dict(doc)
             for doc in self.credential_collection.find({"type": "telegram", "active": True})
         ]
+    def get_pipeline_config(self) -> dict:
+        return self.get_config_from_db("PIPELINE_CONFIG")    
 
 class EnvConfig(BaseConfig):
     def __init__(self):
