@@ -1,3 +1,4 @@
+from app.core.configs.env_config import EnvConfig
 from app.core.models.scraper_task import ScrapingApproach
 from app.scrapers.dummy.dummy_file_scrarper import DummyFileScraper
 from app.scrapers.telegram.telegram_web_scraper import TelegramWebScraper
@@ -13,13 +14,13 @@ class ScraperFactory:
         self.registry.register(
             ScrapingApproach(name="DummyFileScraper", platform="File", mode="Dummy"),
             DummyFileScraper,
-            DUMMY_SCRAPER_CONFIG
+            EnvConfig()
         )
 
         self.registry.register(
             ScrapingApproach(name="TelegramWebScraper", platform="telegram", mode="web"),
             TelegramWebScraper,
-            TELEGRAM_WEB_SCRAPER_CONFIG
+            EnvConfig()
         )
 
     def create_scraper(self, approach: ScrapingApproach):

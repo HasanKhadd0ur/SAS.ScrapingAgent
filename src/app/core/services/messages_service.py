@@ -44,7 +44,7 @@ class MessagesService:
             "content": message.content,
             "sentiment_label": message.sentiment_label,
             "sentiment_score": message.sentiment_score,
-            "timestamp": message.timestamp,  
+            "created_at": message.created_at,  
             "platform":message.platform,
             "source":message.source,
             "raw_content":message.raw_content
@@ -56,7 +56,7 @@ class MessagesService:
             writer = csv.writer(f)
             for msg in messages:
                 writer.writerow([
-                    msg.timestamp,
+                    msg.created_at,
                     msg.domain,
                     msg.platform,
                     msg.source,
