@@ -1,3 +1,4 @@
+from app.core.configs.base_config import BaseConfig
 from app.scrapers.base import BaseScraper
 from app.core.models.scraper_task import ScrapingTask
 from app.core.models.message import Message
@@ -7,7 +8,8 @@ import asyncio
 import os
 
 class DummyFileScraper(BaseScraper):
-    def __init__(self, config: dict):
+    def __init__(self, config_service: BaseConfig):
+        config=config_service.get_config("DUMMY_SCRAPER_CONFIG")
         self.config = config
         self.file_path = config.get("file_path", "../assets/sample_tweets.jsonl")
         self.delay = config.get("delay", 0.1)
@@ -29,7 +31,7 @@ class DummyFileScraper(BaseScraper):
                         platform="dummy_file",
                         raw_content=data["text"],
                         content=data["text"],
-                        timestamp=data["created_at"]
+                        created_at=data["created_at"]
                     )
                     batch.append(msg)
 

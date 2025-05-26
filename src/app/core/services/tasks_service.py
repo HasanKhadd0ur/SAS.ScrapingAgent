@@ -10,7 +10,7 @@ class TasksService:
     async def stream_tasks(self) -> AsyncGenerator[ScrapingTask, None]:
         # Simulate streaming 3 fake tasks with small delays
         for i in range(300):
-            await asyncio.sleep(1)  # Simulate delay between tasks
+            await asyncio.sleep(0.1)  # Simulate delay between tasks
             yield ScrapingTask(
                     id=str(uuid.uuid4()), 
                     platform="telegram",
@@ -21,9 +21,28 @@ class TasksService:
                 )
             # yield ScrapingTask(
             #         id=str(uuid.uuid4()), 
-            #         domain="telegram.Politics",
-            #         sources=[DataSource(target="freesyria102", limit=100)],
+            #         platform="telegram",
+            #         domain="Politics",
+            #         sources=[
+            #             # DataSource(target="freesyria102", limit=160),
+            #             # DataSource(target="Almohrar", limit=1060),
+            #             DataSource(target="MQ_QU", limit=160)
+            #                  ],
             #         limit=100,
-            #         scraping_approach=ScrapingApproach(name="TelegramWebScraper",platform="Telegram",mode="Web")
+            #         scraping_approach=ScrapingApproach(name="TelegramWebScraper",platform="telegram",mode="Web")
             #     )
-
+            #  yield ScrapingTask(
+            #         id=str(uuid.uuid4()), 
+            #         platform="telegram",
+            #         domain="Politics",
+            #         sources=[
+            #             # DataSource(target="freesyria102", limit=160),
+            #             # DataSource(target="Almohrar", limit=1060),
+            #             DataSource(target="MQ_QU", limit=160)
+            #                  ],
+            #         limit=100,
+            #         scraping_approach=ScrapingApproach(name="TelegramTelethonScraper",platform="telegram",mode="bot")
+            #     )
+# Almohrar
+# freesyria102
+# MQ_QU

@@ -14,7 +14,7 @@ class Message:
     content: str=""
     sentiment_label: str=""
     sentiment_score: float =0
-    timestamp: datetime = datetime.utcnow()
+    created_at: datetime = datetime.utcnow()
     metadata: dict = None
 
     def __post_init__(self):

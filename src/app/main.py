@@ -1,5 +1,6 @@
 import asyncio
 from app.agent import Agent
+from app.core.configs.env_config import EnvConfig
 from app.scrapers.dummy.dummy_file_scrarper import DummyFileScraper
 from app.pipeline.registry import preprocessing_pipeline, publishing_pipeline
 from app.core.services.tasks_service import TasksService
@@ -11,7 +12,7 @@ async def main():
     factory = ScraperFactory()
 
     agent = Agent(
-        scraper=DummyFileScraper(config=DUMMY_SCRAPER_CONFIG),
+        scraper=DummyFileScraper(config_service=EnvConfig()),
         preprocessing_pipeline=preprocessing_pipeline,
         publishing_pipeline=publishing_pipeline
     )

@@ -15,7 +15,7 @@ class MessagesPublishingStage(FilterStage):
 
     async def process(self,scraping_context : ScrapingContext, nextStep: Optional[FilterStage] = None) -> ScrapingContext:
         try:
-            await self.messagesService.publish(scraping_context.task.platform +scraping_context.task.domain, scraping_context.messages)
+            await self.messagesService.publish(scraping_context.task.platform +"." +scraping_context.task.domain, scraping_context.messages)
         except Exception as _:
             logger.exception(f"Failed to publish messages ")
             
