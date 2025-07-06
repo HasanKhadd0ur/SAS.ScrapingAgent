@@ -1,11 +1,9 @@
-from typing import Any, Dict, List
-import importlib
-
+from typing import Any, List
 from app.core.configs.env_config import EnvSettings
-from app.core.ml.sentiment_analysis_model import SentimentAnalysisModel
+from app.core.ml_models.sentiment_analysis_model import SentimentAnalysisModel
 from app.pipeline.pipeline import Pipeline
-from app.pipeline.stages.hate_speach_filtering_stage import HateSpeachFilteringStage
-from app.pipeline.stages.keyword_filter_stage import KeywordFilterStage
+from app.pipeline.stages.hate_speach_processing_stage import HateSpeachProcessingStage
+from app.pipeline.stages.keyword_processing_stage import KeywordProcessingStage
 from app.pipeline.stages.master_notifying_stage import MasterNotifyingStage
 from app.pipeline.stages.messages_publishing_stage import MessagesPublishingStage
 from app.pipeline.stages.messages_saving_stage import MessagesSavingStage
@@ -14,11 +12,11 @@ from app.pipeline.stages.sentiment_analysis_stage import SentimentAnalysisStage
 
 # Map short names to actual classes manually or via dynamic import
 STAGE_CLASS_MAP = {
-    "KeywordFilterStage": KeywordFilterStage,
+    "KeywordFilterStage": KeywordProcessingStage,
     "NormalizeTextStage": NormalizeTextStage,
     "MessagesPublishingStage": MessagesPublishingStage,
     "SentimentAnalysisStage": SentimentAnalysisStage,
-    "HateSpeachFilteringStage": HateSpeachFilteringStage,
+    "HateSpeachFilteringStage": HateSpeachProcessingStage,
     "MessagesSavingStage": MessagesSavingStage,
     "MasterNotifyingStage": MasterNotifyingStage,
 }

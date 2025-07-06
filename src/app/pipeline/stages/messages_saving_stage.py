@@ -1,14 +1,14 @@
 from typing import Optional
 from app.core.models.message import ScrapingContext
 from app.core.services.messages_service import MessagesService
-from app.pipeline.base import FilterStage
+from app.pipeline.base.processing_stage import ProcessingStage
 
-class MessagesSavingStage(FilterStage):
+class MessagesSavingStage(ProcessingStage):
     def __init__(self, file_path: str = "..//assets//messages.csv"):
         super().__init__()
         self.file_path = file_path
 
-    async def process(self, scraping_context : ScrapingContext, nextStep: Optional[FilterStage] = None) -> ScrapingContext:
+    async def process(self, scraping_context : ScrapingContext, nextStep: Optional[ProcessingStage] = None) -> ScrapingContext:
         messages_service = MessagesService()
         messages_service.save_messages(scraping_context.messages,self.file_path)
         if nextStep:

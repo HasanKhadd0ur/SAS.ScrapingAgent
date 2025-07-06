@@ -1,18 +1,18 @@
 from typing import Optional
 from app.core.models.message import ScrapingContext
-from app.pipeline.base import FilterStage
+from app.pipeline.base.processing_stage import ProcessingStage
 
 KEYWORDS = {
     "politics": ["election", "سوريا", "الشرع", "government"],
     "sports": ["goal", "match", "player", "tournament"]
 }
 
-class KeywordFilterStage(FilterStage):
+class KeywordProcessingStage(ProcessingStage):
     def __init__(self, keywords=KEYWORDS):
         super().__init__()
         self.keywords = keywords
 
-    async def process(self, scraping_context : ScrapingContext, nextStep: Optional[FilterStage] = None) -> ScrapingContext:
+    async def process(self, scraping_context : ScrapingContext, nextStep: Optional[ProcessingStage] = None) -> ScrapingContext:
         filtered_messages = []
         for message in scraping_context.messages:
             keywords = self.keywords.get(message.domain, [])

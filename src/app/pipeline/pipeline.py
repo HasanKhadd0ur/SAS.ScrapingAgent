@@ -1,11 +1,11 @@
 from app.core.models.message import ScrapingContext
-from app.pipeline.base import FilterStage
+from app.pipeline.base.processing_stage import ProcessingStage
 
 class Pipeline:
     def __init__(self):
         self.filters = []
 
-    def add_filter(self, filter_stage_class :FilterStage,*args):
+    def add_filter(self, filter_stage_class :ProcessingStage,*args):
         """Add a filter class (that extends FilterStage) to the pipeline."""
         # Instantiate the filter class and add it to the pipeline
         self.filters.append(filter_stage_class(*args))
