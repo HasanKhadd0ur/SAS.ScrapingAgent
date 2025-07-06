@@ -11,26 +11,26 @@ class TasksService:
         # Simulate streaming 3 fake tasks with small delays
         for i in range(300):
             await asyncio.sleep(0.1)  # Simulate delay between tasks
-            yield ScrapingTask(
-                    id=str(uuid.uuid4()), 
-                    platform="telegram",
-                    domain="Politics",
-                    sources=[DataSource(target="freesyria102", limit=30)],
-                    limit=100,
-                    scraping_approach=ScrapingApproach(name="DummyFileScraper",platform="File",mode="Dummy")
-                )
             # yield ScrapingTask(
             #         id=str(uuid.uuid4()), 
             #         platform="telegram",
             #         domain="Politics",
-            #         sources=[
-            #             # DataSource(target="freesyria102", limit=160),
-            #             # DataSource(target="Almohrar", limit=1060),
-            #             DataSource(target="MQ_QU", limit=160)
-            #                  ],
+            #         sources=[DataSource(target="freesyria102", limit=30)],
             #         limit=100,
-            #         scraping_approach=ScrapingApproach(name="TelegramWebScraper",platform="telegram",mode="Web")
+            #         scraping_approach=ScrapingApproach(name="DummyFileScraper",platform="File",mode="Dummy")
             #     )
+            yield ScrapingTask(
+                    id=str(uuid.uuid4()), 
+                    platform="telegram",
+                    domain="Politics",
+                    sources=[
+                        # DataSource(target="freesyria102", limit=160),
+                        # DataSource(target="Almohrar", limit=1060),
+                        DataSource(target="Almohrar", limit=5)
+                             ],
+                    limit=10,
+                    scraping_approach=ScrapingApproach(name="TelegramWebScraper",platform="telegram",mode="Web")
+                )
             #  yield ScrapingTask(
             #         id=str(uuid.uuid4()), 
             #         platform="telegram",

@@ -1,6 +1,6 @@
 from app.core.models.message import ScrapingContext
 from app.core.models.scraper_task import ScrapingTask
-from app.scrapers.base import BaseScraper
+from app.core.base.base import BaseScraper
 from app.pipeline.pipeline import Pipeline
 from app.pipeline.registry import publishing_pipeline as pub, preprocessing_pipeline as pre
 

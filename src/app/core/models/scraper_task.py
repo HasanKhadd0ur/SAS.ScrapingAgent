@@ -5,8 +5,10 @@ from typing import List
 @dataclass
 class DataSource:
     target: str
-    config: dict = None
     limit: int =1 
+
+    # config: dict = None
+
 @dataclass
 class ScrapingApproach:
     mode: str ="Dummy"

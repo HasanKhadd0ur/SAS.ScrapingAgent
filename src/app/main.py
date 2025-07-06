@@ -4,7 +4,6 @@ from app.core.configs.env_config import EnvConfig
 from app.scrapers.dummy.dummy_file_scrarper import DummyFileScraper
 from app.pipeline.registry import preprocessing_pipeline, publishing_pipeline
 from app.core.services.tasks_service import TasksService
-from app.core.configs.scrapers_config import DUMMY_SCRAPER_CONFIG
 from app.scrapers.factory import ScraperFactory
 
 async def main():
