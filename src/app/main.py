@@ -1,10 +1,10 @@
 import asyncio
 from app.agent import Agent
 from app.core.configs.env_config import EnvConfig
-from app.scrapers.dummy.dummy_file_scrarper import DummyFileScraper
-from app.pipeline.registry import preprocessing_pipeline, publishing_pipeline
 from app.core.services.tasks_service import TasksService
-from app.scrapers.factory import ScraperFactory
+from app.scrapers.factory.scrapers_factory import ScraperFactory
+from app.scrapers.sources.dummy.dummy_file_scrarper import DummyFileScraper
+from app.pipeline.factory.default_pipelines import preprocessing_pipeline, publishing_pipeline
 
 async def main():
     tasks_service = TasksService()
