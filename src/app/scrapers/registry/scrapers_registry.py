@@ -1,12 +1,12 @@
-from typing import Dict, Type, Tuple, Optional
-
+from typing import Dict, Type, Tuple
 from app.core.configs.base_config import BaseConfig
 from app.core.configs.env_config import EnvConfig
 from app.core.models.scraper_task import ScrapingApproach
-from app.scrapers.base import BaseScraper
-from app.scrapers.dummy.dummy_file_scrarper import DummyFileScraper
+from app.scrapers.base.base_scraper import BaseScraper
+from app.scrapers.sources.dummy.dummy_file_scrarper import DummyFileScraper
 
 class ScraperRegistry:
+
     def __init__(self):
         self.registry: Dict[str, Tuple[Type[BaseScraper], dict]] = {}
 

@@ -3,10 +3,9 @@ import logging
 from typing import AsyncGenerator, List
 from telethon import TelegramClient
 from app.core.configs.base_config import BaseConfig
-from app.scrapers.base import BaseScraper
+from app.scrapers.base.base_scraper import BaseScraper
 from app.core.models.scraper_task import ScrapingTask
 from app.core.models.message import Message
-from app.core.models.credential_model import TelegramCredential
 
 
 class TelegramTelethonScraper(BaseScraper):

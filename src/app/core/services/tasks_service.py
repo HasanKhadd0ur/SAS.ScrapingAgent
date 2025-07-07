@@ -26,9 +26,9 @@ class TasksService:
             #         sources=[
             #             # DataSource(target="freesyria102", limit=160),
             #             # DataSource(target="Almohrar", limit=1060),
-            #             DataSource(target="MQ_QU", limit=160)
+            #             DataSource(target="Almohrar", limit=5)
             #                  ],
-            #         limit=100,
+            #         limit=10,
             #         scraping_approach=ScrapingApproach(name="TelegramWebScraper",platform="telegram",mode="Web")
             #     )
             #  yield ScrapingTask(

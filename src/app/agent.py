@@ -1,8 +1,8 @@
 from app.core.models.message import ScrapingContext
 from app.core.models.scraper_task import ScrapingTask
-from app.scrapers.base import BaseScraper
+from app.scrapers.base.base_scraper import BaseScraper
 from app.pipeline.pipeline import Pipeline
-from app.pipeline.registry import publishing_pipeline as pub, preprocessing_pipeline as pre
+from app.pipeline.factory.default_pipelines import publishing_pipeline as pub, preprocessing_pipeline as pre
 
 
 class Agent:

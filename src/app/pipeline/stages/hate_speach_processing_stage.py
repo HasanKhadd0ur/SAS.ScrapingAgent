@@ -1,9 +1,9 @@
-from app.pipeline.base import FilterStage
+from app.pipeline.base.processing_stage import ProcessingStage
 from app.core.models.message import ScrapingContext
 
-class HateSpeachFilteringStage(FilterStage):
+class HateSpeachProcessingStage(ProcessingStage):
        
-    async def process(self, scraping_context : ScrapingContext, nextStep: FilterStage = None) -> ScrapingContext:
+    async def process(self, scraping_context : ScrapingContext, nextStep: ProcessingStage = None) -> ScrapingContext:
         # To Do 
         # add hate speach model and filteing the messages
 

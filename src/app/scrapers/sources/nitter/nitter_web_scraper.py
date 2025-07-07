@@ -1,14 +1,14 @@
-from app.scrapers.base import BaseScraper
-from app.core.models.scraper_task import ScraperTask
 from app.core.models.message import Message
-
+from app.core.models.scraper_task import ScrapingTask
+from app.scrapers.base.base_scraper import BaseScraper
 from typing import List
 from playwright.async_api import async_playwright
 
 
+
 class NitterWebScraper(BaseScraper):
 
-    async def run_task(self, task: ScraperTask) -> List[Message]:
+    async def run_task(self, task: ScrapingTask) -> List[Message]:
         messages = []
 
         query = task.sources[0].target.replace(" ", "+")
@@ -43,9 +43,9 @@ class NitterWebScraper(BaseScraper):
                                 tweet_time = await time_el.get_attribute("title")
 
                                 messages.append(Message(
-                                    source="nitter",
+                                    platform="nitter",
                                     domain=task.domain,
-                                    channel=username,
+                                    source=username,
                                     raw_content=tweet_text,
                                     content=tweet_text
                                 ))
