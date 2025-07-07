@@ -26,7 +26,7 @@ class FeedbackStage(ProcessingStage):
                 "timestamp": time.time(),
                 "top_named_entities": [{"text": text, "count": count} for text, count in top_entities],
             }
-            await self.feedback_service.send_feedback(payload)
+            self.feedback_service.send_feedback(payload)
             self.entity_counter.clear()
             self.last_sent_time = current_time
 

@@ -5,5 +5,5 @@ class FeedbackService:
         self.producer = kafka_producer
         self.topic = topic
 
-    async def send_feedback(self, feedback_data: Dict[str, Any]):
-        await self.producer.send(self.topic, feedback_data)
+    def send_feedback(self, feedback_data: Dict[str, Any]):
+        self.producer.send(self.topic, feedback_data)
