@@ -5,7 +5,7 @@ from app.core.models.message import ScrapingContext
 from app.core.services.feed_back_service import FeedbackService
 
 class FeedbackStage(ProcessingStage):
-    def __init__(self, feedback_service: FeedbackService, interval_minutes: int = 5, top_k: int = 5):
+    def __init__(self, feedback_service: FeedbackService, interval_minutes: int = 1, top_k: int = 5):
         self.feedback_service = feedback_service
         self.interval = interval_minutes * 60  # convert to seconds
         self.top_k = top_k
