@@ -17,3 +17,7 @@ class BaseConfig(ABC):
         pass
     def get_random_telegram_credential(self) -> TelegramCredential:
         pass
+    def get_master_url(self) -> str: 
+        pass
+    def get_scraper_name(self)-> str:
+        pass

@@ -75,3 +75,9 @@ class EnvConfig(BaseConfig):
         if not self.telegram_credentials:
             raise ValueError("No active Telegram credentials found in DB.")
         return random.choice(self.telegram_credentials)
+
+    def get_master_url(self) -> str: 
+        return os.getenv("MASTER_URL", "http://localhost:5050")
+    
+    def get_scraper_name(self)-> str:
+        return os.getenv("SCRAPER_NAME", "MyScraperAgent")
