@@ -21,7 +21,7 @@ class PipelineFactory:
 
         for stage in stages_info:
             stage_name = stage["stage"]
-            print(stage_name)
+            print(f'[INFO] Register Stage : {stage_name}')
             cls, args = self._get_stage_class_and_args(stage_name)
             pipeline.add_filter(cls, *args)
 
