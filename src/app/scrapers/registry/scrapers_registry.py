@@ -22,7 +22,7 @@ class ScraperRegistry:
         Instantiate the scraper with its registered configuration.
         """
         key = self._make_key(approach)
-        scraper_class, config = self.registry.get(key, (DummyFileScraper, {}))
+        scraper_class, config = self.registry.get(key, (DummyFileScraper,EnvConfig()))
         return scraper_class(config_service=config)
 
     def _make_key(self, approach: ScrapingApproach) -> str:
