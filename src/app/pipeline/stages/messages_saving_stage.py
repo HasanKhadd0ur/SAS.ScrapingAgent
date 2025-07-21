@@ -4,7 +4,7 @@ from app.core.services.messages_service import MessagesService
 from app.pipeline.base.processing_stage import ProcessingStage
 
 class MessagesSavingStage(ProcessingStage):
-    def __init__(self, file_path: str = "..//assets//messages.csv"):
+    def __init__(self, file_path: str = "assets//messages.csv"):
         super().__init__()
         self.file_path = file_path
 

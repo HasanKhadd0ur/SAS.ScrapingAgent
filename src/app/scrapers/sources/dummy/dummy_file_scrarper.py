@@ -11,13 +11,13 @@ class DummyFileScraper(BaseScraper):
     def __init__(self, config_service: BaseConfig):
         config=config_service.get_config("DUMMY_SCRAPER_CONFIG")
         self.config = config
-        self.file_path = config.get("file_path", "../assets/sample_tweets.jsonl")
+        self.file_path = config.get("file_path", "assets/sample_tweets.jsonl")
         self.delay = config.get("delay", 0.1)
         self.batch_size = config.get("batch_size", 1)
 
     async def run_task(self, task: ScrapingTask) -> AsyncGenerator[List[Message], None]:
         batch = []
-
+        
         try:
             with open(self.file_path, "r", encoding="utf-8") as f:
                 for line in f:
