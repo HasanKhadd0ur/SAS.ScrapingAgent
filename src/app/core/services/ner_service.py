@@ -20,3 +20,11 @@ class NERService:
     def extract_named_entities(self, text: str) -> List[NamedEntity]:
         doc = self.nlp(text)
         return [NamedEntity(ent.text, ent.type) for ent in doc.ents]
+    
+    def extract_named_entities_batch(self, texts: List[str]) -> List[List[NamedEntity]]:
+        results = []
+        for text in texts:
+            doc = self.nlp(text)
+            entities = [NamedEntity(ent.text, ent.type) for ent in doc.ents]
+            results.append(entities)
+        return results

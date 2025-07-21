@@ -19,11 +19,11 @@ class MessagesService:
             
             # Log and print a summary of the batch publication
             logger.info(f"Published batch to topic '{topic}': {len(messages)} messages")
-            print(f"[+] Published batch to topic {topic}: {len(messages)} messages")
+            print(f"[INFO] Published batch to topic {topic}: {len(messages)} messages")
             
             if messages:
                 logger.debug(f"First message in batch: '{messages[0].content[:20]}...' with label={messages[0].sentiment_label}, score={messages[0].sentiment_score}")
-                print(f"[+] First message in batch: '{messages[0].content[:20]}...' with label={messages[0].sentiment_label}, score={messages[0].sentiment_score}")
+                print(f"[INFO] First message in batch: '{messages[0].content[:20]}...' with label={messages[0].sentiment_label}, score={messages[0].sentiment_score}")
         
         except Exception as e:
             logger.error(f"Failed to publish messages to topic '{topic}': {str(e)}", exc_info=True)

@@ -9,8 +9,8 @@ class MessagesSavingStage(ProcessingStage):
         self.file_path = file_path
 
     async def process(self, scraping_context : ScrapingContext, nextStep: Optional[ProcessingStage] = None) -> ScrapingContext:
-        messages_service = MessagesService()
-        messages_service.save_messages(scraping_context.messages,self.file_path)
+        # messages_service = MessagesService()
+        # messages_service.save_messages(scraping_context.messages,self.file_path)
         if nextStep:
             return await nextStep.process(scraping_context.messages)
         return scraping_context

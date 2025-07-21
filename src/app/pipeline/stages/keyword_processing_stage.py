@@ -3,8 +3,8 @@ from app.core.models.message import ScrapingContext
 from app.pipeline.base.processing_stage import ProcessingStage
 
 KEYWORDS = {
-    "politics": ["election", "سوريا", "الشرع", "government"],
-    "sports": ["goal", "match", "player", "tournament"]
+    "politics": ["election", "سوريا", "الشرع"],
+    "sports": ["goal", "match", "player"]
 }
 
 class KeywordProcessingStage(ProcessingStage):
