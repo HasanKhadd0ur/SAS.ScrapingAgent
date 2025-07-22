@@ -10,11 +10,18 @@ logger = logging.getLogger(__name__)
 
 class TasksService:
     
-   def __init__(self, kafka_topic="scraping-tasks", kafka_bootstrap="localhost:9092", kafka_group="scraper-agent", master_api_url="http://localhost:5000"):
+   def __init__(self,
+            kafka_topic="scraping-tasks",
+            kafka_bootstrap="localhost:9092", 
+            kafka_group="scraper-agent", 
+            master_api_url="http://localhost:5000",
+            scraper_instance_id="scraper-1"):
+       
         self.consumer = KafkaConsumer(
             topic=kafka_topic,
             bootstrap_servers=kafka_bootstrap,
-            group_id=kafka_group
+            group_id=kafka_group,
+            group_instance_id=scraper_instance_id
         )
         self.master_api_url = master_api_url 
     
