@@ -1,13 +1,16 @@
+from app.core.configs.env_config import EnvConfig
 from app.core.ml_models.sentiment_analysis_model import SentimentAnalysisModel
 from app.core.services.feed_back_service import FeedbackService
 from app.core.services.ner_service import NERService
 from app.kafka.kafka_producer import KafkaProducer
+from app.pipeline.stages.embedding_stage import EmbeddingStage
 from app.pipeline.stages.feedback_stage import FeedbackStage
 from app.pipeline.stages.hate_speach_processing_stage import HateSpeachProcessingStage
 from app.pipeline.stages.keyword_processing_stage import KeywordProcessingStage
 from app.pipeline.stages.master_notifying_stage import MasterNotifyingStage
 from app.pipeline.stages.messages_publishing_stage import MessagesPublishingStage
 from app.pipeline.stages.messages_saving_stage import MessagesSavingStage
+from app.pipeline.stages.messsages_classification_stage import MessagesClasificationStage
 from app.pipeline.stages.named_entities_extraction_stage import NamedEntitiesExtractionStage
 from app.pipeline.stages.normalize_text_stage import NormalizeTextStage
 from app.pipeline.stages.sentiment_analysis_stage import SentimentAnalysisStage
@@ -16,15 +19,23 @@ from app.pipeline.stages.sentiment_analysis_stage import SentimentAnalysisStage
 shared_dependencies = {
     "SAModel": SentimentAnalysisModel(),
     "NERService":NERService(),
-    "FeedbackService": FeedbackService(KafkaProducer(), topic="scraping-feedback")
-
+    "FeedbackService": FeedbackService(KafkaProducer(), topic="scraping-feedback"),
+    "EnvConfig":EnvConfig()
     # Add more shared dependencies here if needed
 }
 
 STAGE_CLASS_MAP = {
+    "EmbeddingStage": {
+        "class": EmbeddingStage,
+        "dependencies": []
+    },
+    "MessagesClasificationStage": {
+        "class": MessagesClasificationStage,
+        "dependencies": []
+    },
     "KeywordFilterStage": {
         "class": KeywordProcessingStage,
-        "dependencies": []
+        "dependencies": ["EnvConfig"]
     },
     "NormalizeTextStage": {
         "class": NormalizeTextStage,
