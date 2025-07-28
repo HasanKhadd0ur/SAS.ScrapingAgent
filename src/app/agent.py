@@ -29,13 +29,27 @@ class Agent:
     def assign_task(self, task: ScrapingTask):
         self.task = task
 
-    async def run(self):
+    # async def run(self):
+    #     if not self.task:
+    #         raise ValueError("No task assigned to agent.")
+
+    #     async for message_batch in self.scraper.run_task(self.task):
+            
+    #         context=ScrapingContext(messages=message_batch,task=self.task)       
+            
+    #         context = await self.preprocessing_pipeline.process(context)
+    #         await self.publishing_pipeline.process(context)
+            
+    async def run(self) -> int:
         if not self.task:
             raise ValueError("No task assigned to agent.")
 
+        total_processed = 0
+
         async for message_batch in self.scraper.run_task(self.task):
-            
-            context=ScrapingContext(messages=message_batch,task=self.task)       
-            
+            context = ScrapingContext(messages=message_batch, task=self.task)
             context = await self.preprocessing_pipeline.process(context)
             await self.publishing_pipeline.process(context)
+            total_processed += len(message_batch)
+
+        return total_processed
