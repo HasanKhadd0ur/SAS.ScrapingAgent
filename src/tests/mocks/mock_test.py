@@ -2,11 +2,12 @@ from app.core.models.scraper_task import ScrapingApproach
 
 
 class MockTask:
-    def __init__(self, id, scraping_approach= ScrapingApproach()):
+    def __init__(self, id, scraping_approach= ScrapingApproach(),limit=100):
         self.id = id
         self.scraping_approach :ScrapingApproach = scraping_approach
         self.domain='Politics'
         self.platform='Telegram'
+        self.limit=limit
 
 
 class MockTasksService:

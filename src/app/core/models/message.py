@@ -24,7 +24,19 @@ class Message:
         if self.metadata is None:
             self.metadata = {}
 
+    def convert_embedding(self,embedding):
+        if isinstance(embedding, np.ndarray):
+            return embedding.tolist()
+        elif hasattr(embedding, "tolist"):  # torch.Tensor or similar
+            return embedding.tolist()
+        elif isinstance(embedding, list):
+            # Ensure all items are float-compatible
+            return [float(x) for x in embedding]
+        return embedding
+
+
     def to_dict(self) -> dict:
+
         return {
             "id": self.id,
             "source": self.source,
@@ -35,7 +47,7 @@ class Message:
             "sentiment_label": self.sentiment_label,
             "sentiment_score": self.sentiment_score,
             "created_at":  self.created_at.isoformat() if isinstance(self.created_at, datetime) else self.created_at,
-            "embedding": self.embedding.tolist() if isinstance(self.embedding, np.ndarray) else self.embedding,
+            "embedding": self.convert_embedding(self.embedding),#self.embedding.tolist() if isinstance(self.embedding, np.ndarray) else self.embedding,
             "metadata": self.metadata
         }
 

@@ -1,3 +1,4 @@
+from random import randint
 from app.scrapers.base.base_scraper import BaseScraper
 from app.core.models.scraper_task import ScrapingTask
 from app.core.configs.base_config import BaseConfig
@@ -17,11 +18,13 @@ class DummyFileScraper(BaseScraper):
 
     async def run_task(self, task: ScrapingTask) -> AsyncGenerator[List[Message], None]:
         batch = []
-        
+        total_yielded = 0         
         try:
             with open(self.file_path, "r", encoding="utf-8") as f:
                 for line in f:
-                    await asyncio.sleep(self.delay)  # simulate delay
+                    if total_yielded >= task.limit:
+                        break
+                    await asyncio.sleep(self.delay+float(randint(1,40))/1000)  # simulate delay
                     data = json.loads(line)
 
                     msg = Message(
@@ -33,8 +36,9 @@ class DummyFileScraper(BaseScraper):
                         content=data["text"],
                         created_at=data["created_at"]
                     )
+                    
                     batch.append(msg)
-
+                    total_yielded += 1
                     if len(batch) >= self.batch_size:
                         yield batch
                         batch = []

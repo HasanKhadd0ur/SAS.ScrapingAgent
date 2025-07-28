@@ -12,7 +12,7 @@ from random import randint
 class TelegramWebScraper(BaseScraper):
     def __init__(self, config_service: BaseConfig):
         config=config_service.get_config("TELEGRAM_WEB_SCRAPER_CONFIG")
-        self.batch_size = config.get("batch_size", 5)
+        self.batch_size = 30 #config.get("batch_size", 5)
         self.delay = config.get("delay", 0.1)
         self.selector = config.get("selector", "div.tgme_widget_message")
 
@@ -27,7 +27,7 @@ class TelegramWebScraper(BaseScraper):
                 channel_url = f"https://t.me/s/{source.target}"
 
                 await page.goto(channel_url)
-                await page.wait_for_timeout(int(self.delay * 1000)+ randint(100,1000))  # convert to ms
+                await page.wait_for_timeout(int(self.delay * 1000)+ randint(1000,10000))  # convert to ms
 
                 await page.wait_for_timeout(randint(500, 1500)) # Small additional delay after selector wait
 
@@ -96,7 +96,7 @@ class TelegramWebScraper(BaseScraper):
                     #     raw_content=content,
                     #     content=content,
                     # )
-                    print(timestamp)
+                    # print(timestamp)
                     content = await post.inner_text()
                     message = Message(
                         id=message_id,
