@@ -1,18 +1,20 @@
 import pytest
 import uuid
 from app.agent import Agent
+from app.core.configs.env_config import EnvConfig
 from app.core.models.scraper_task import DataSource, ScrapingApproach, ScrapingTask
-from app.scrapers.dummy.dummy_file_scrarper import DummyFileScraper
 from app.core.configs.scrapers_config import DUMMY_SCRAPER_CONFIG
-from app.pipeline.registry import preprocessing_pipeline, publishing_pipeline
-from app.scrapers.factory import ScraperFactory
+from app.scrapers.factory.scrapers_factory import ScraperFactory
+from app.scrapers.sources.dummy.dummy_file_scrarper import DummyFileScraper
+from app.pipeline.factory.default_pipelines import preprocessing_pipeline, publishing_pipeline
 
 @pytest.mark.asyncio
 async def test_dummy_file_scraper_loads_data():
-    scraper = DummyFileScraper(config=DUMMY_SCRAPER_CONFIG)
+    scraper = DummyFileScraper(EnvConfig())
     
     task = ScrapingTask(
                     id=str(uuid.uuid4()), 
+                    platform='Telegram',
                     domain="politics",
                     sources=[DataSource(target="freesyria102", limit=30)],
                     limit=100,
@@ -21,7 +23,7 @@ async def test_dummy_file_scraper_loads_data():
 
     # Simulate task assignment
     agent = Agent(
-        scraper=DummyFileScraper(config=DUMMY_SCRAPER_CONFIG),
+        scraper=DummyFileScraper(EnvConfig()),
         preprocessing_pipeline=preprocessing_pipeline,
         publishing_pipeline=publishing_pipeline
     )
