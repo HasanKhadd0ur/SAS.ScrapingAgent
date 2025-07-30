@@ -1,16 +1,16 @@
 # 🕷️ SAS.ScrapingAgent
 
-**SAS.ScrapingAgent** is a scalable, modular scraping service that collects and processes real-time data from platforms like **Telegram**, **Nitter**, and others. It is part of a larger microservices-based system designed for monitoring and detecting local events such as crimes and disasters using social media content.
+**SAS.ScrapingAgent** is a scalable, modular scraping service that collects and processes real-time data from platforms like **Telegram**, **Nitter**, **Twitter (API)**, and others. It is part of a larger microservices-based system designed for monitoring and detecting local events such as crimes and disasters using social media content.
 
 ---
 
 ## 📦 Features
 
-* 🔌 Supports multiple scraping sources (Telegram, Nitter, etc.)
+* 🔌 Supports multiple scraping sources (Telegram, Nitter, Twitter, etc.)
 * 📄 Extracts structured data
 * 🎯 Pipeline for preprocessing and filtering
 * ⚙️ Easily extendable with new scraper modules
-* 🛠 Uses **Selenium** or **Playwright** for web scraping
+* 🛠 Uses **Selenium**, **Playwright**, or **API** for scraping
 * 🔁 Asynchronous support for high throughput
 * 🔄 Integrates with Kafka for event publishing
 
@@ -22,25 +22,16 @@
 src/
 └── app/
     ├── core/                  # Domain layer
-    │   ├── logging/           # Logging setup (optional/custom)
-    │   ├── models/            # Core domain models (e.g. Message, ScraperTask)
-    │   └── services/          # Reusable logic or integrations (e.g. Kafka producer)
-    │
     ├── pipeline/              # Data processing pipeline
-    │   ├── stages/            # Individual pipeline steps (e.g. keyword filtering)
-    │   ├── base.py            # Pipeline base interface
-    │   ├── registry.py        # Dynamic registration of stages
-    │   └── pipeline.py        # Main pipeline implementation
-    │
-    ├── scrapers/              # Data source modules
-    │   ├── base.py            # Abstract scraper interface
-    │   ├── telegram/          # Telegram scraper implementation
-    │   └── nitter/            # Nitter (Twitter frontend) scraper implementation
-    │
-    ├── main.py                # Application entry point
-    └── __init__.py
-tests/                         # Unit and integration tests
-
+    ├── scrapers/              # Scraper modules (Telegram, Twitter, etc.)
+    │   └── sources/
+    │       ├── telegram/
+    │       ├── twitter/       # ✅ NEW: Twitter API scraper
+    │       ├── nitter/
+    │       └── dummy/
+    ├── kafka/                 # Kafka consumer/producer integrations
+    └── main.py                # Entry point
+tests/                         # Unit & performance tests
 ```
 
 ---
@@ -50,7 +41,7 @@ tests/                         # Unit and integration tests
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-user/sas.scrapingagent.git
+git clone https://github.com/hasankhadd0ur/sas.scrapingagent.git
 cd sas.scrapingagent
 ```
 
@@ -67,24 +58,11 @@ source env/bin/activate  # On Windows: env\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 4. Configure environment
-
-Edit `config.py` or use `.env` for:
-
-```env
-API_ID=your_telegram_api_id
-API_HASH=your_telegram_api_hash
-SESSION=session_name
-DESTINATION=destination_channel_or_user
-CHATS=source_channel_ids_or_usernames
-KEY_WORDS=keywords,to,filter,by
-```
-
 ---
 
 ## 🧪 Usage
 
-### Run a specific scraper manually
+### Run scrapers manually
 
 ```bash
 python -m app.main
@@ -92,25 +70,47 @@ python -m app.main
 
 The main agent will:
 
-* Run enabled scraper tasks
-* Fetch, filter, and transform messages
-* Optionally send results to a Kafka topic or save locally
+* Load active scraping tasks
+* Run platform-specific scrapers (Telegram, Twitter, etc.)
+* Filter and transform collected messages
+* Optionally publish them to Kafka or store locally
 
 ---
 
 ## ✏️ Adding a New Scraper
 
-1. Create a new folder under `app/scrapers/`
+1. Create a module under `app/scrapers/sources/`
 2. Inherit from `BaseScraper`
-3. Implement `run_task(self, task: ScraperTask) -> List[Message]`
+3. Implement:
+
+```python
+async def run_task(self, task: ScrapingTask) -> AsyncGenerator[List[Message], None]
+```
 
 Example:
 
 ```python
-class YourCustomScraper(BaseScraper):
-    def run_task(self, task: ScraperTask) -> List[Message]:
-        ...
+class MyScraper(BaseScraper):
+    async def run_task(self, task):
+        # your scraping logic
+        yield [Message(...), ...]
 ```
+
+Then register your scraper in `scrapers_registry.py`.
+
+---
+
+## 📤 Kafka Integration (optional)
+
+The system can forward messages to Kafka. See:
+
+* `kafka_producer.py`
+* `messages_publishing_stage.py`
+
+To enable:
+
+1. Add Kafka configuration to your config service.
+2. Include `MessagesPublishingStage` in your pipeline.
 
 ---
 
@@ -122,11 +122,18 @@ pytest tests/
 
 ---
 
-## 📤 Kafka Integration (optional)
+## 🧩 Supported Scrapers
 
-This project can forward results to Kafka topics by implementing a `KafkaProducer` and integrating it into `main.py`.
+| Source       | Method   | File                                                      |
+| ------------ | -------- | --------------------------------------------------------- |
+| Telegram     | API/Web  | `telegram_telethon_scraper.py`, `telegram_web_scraper.py` |
+| Twitter      | API (v2) | `twitter_api_scraper.py`                                  |
+| Nitter       | Web      | `nitter_web_scraper.py`                                   |
+| Dummy Source | File     | `dummy_file_scrarper.py`                                  |
 
 ---
 
 ## 📄 License
+
 MIT License
+
