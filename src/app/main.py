@@ -6,6 +6,10 @@ from app.core.services.tasks_service import TasksService
 from app.scrapers.factory.scrapers_factory import ScraperFactory
 from app.scrapers.sources.dummy.dummy_file_scrarper import DummyFileScraper
 from app.pipeline.factory.default_pipelines import preprocessing_pipeline, publishing_pipeline
+import warnings
+from sklearn.exceptions import InconsistentVersionWarning
+
+warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
 
 config = EnvConfig()
 
