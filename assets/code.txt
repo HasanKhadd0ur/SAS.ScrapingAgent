@@ -1,0 +1,33 @@
+import csv
+import json
+from datetime import datetime
+
+def clean_tweet_id(tweet_id_raw):
+    """Removes wrapping '="..."' and keeps only the ID string"""
+    return tweet_id_raw.strip().replace('="', '').replace('"', '')
+
+def parse_csv_to_jsonl(input_csv, output_jsonl):
+    with open(input_csv, newline='', encoding='utf-8') as csvfile, \
+         open(output_jsonl, 'w', encoding='utf-8') as jsonlfile:
+
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            tweet_id = clean_tweet_id(row["Tweet ID"])
+            text = row["Tweet Text"]
+            created_at = row["Creation Time"]
+            info_class = row.get("Type", "")
+            
+            json_obj = {
+                "tweet_id": tweet_id,
+                "text": text,
+                "created_at": created_at,
+                "info_class": info_class,
+                "tweet_url": row.get("Tweet URL", ""),
+                "media_urls": row.get("Media URLs", ""),
+                "external_urls": row.get("External URLs", "")
+            }
+
+            jsonlfile.write(json.dumps(json_obj, ensure_ascii=False) + "\n")
+
+# Example usage:
+parse_csv_to_jsonl("./merged_output.csv", "tweets.jsonl")
